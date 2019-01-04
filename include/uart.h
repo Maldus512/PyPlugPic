@@ -13,7 +13,10 @@ typedef enum {
             ON,
             OFF,
             CALIBRATE,
-            RESET
+            RESET,
+            READ_CURRENT,
+            ZERO_POWER,
+            READ_POWER
 } command_t;
 
 void initUART();

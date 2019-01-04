@@ -138,6 +138,15 @@ void UARTReceivedChar(char data) {
         else if (memcmp(cmd, "ATRESET", 7) == 0) {
             newCommand = RESET;
         }
+        else if (memcmp(cmd, "ATREAD", 6) == 0) {
+            newCommand = READ_CURRENT;
+        }
+        else if (memcmp(cmd, "ATPOWER", 7) == 0) {
+            newCommand = READ_POWER;
+        }
+        else if (memcmp(cmd, "ATZERO", 6) == 0) {
+            newCommand = ZERO_POWER;
+        }
         else {
             return;
         }

@@ -2,4 +2,4 @@
 
 
 
-struct StatoMacchina  stato;
+struct StatoMacchina  stato = {0, 0};
