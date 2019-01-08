@@ -16,7 +16,8 @@ typedef enum {
             RESET,
             READ_CURRENT,
             ZERO_POWER,
-            READ_POWER
+            READ_POWER,
+            PRINT_STATE
 } command_t;
 
 void initUART();

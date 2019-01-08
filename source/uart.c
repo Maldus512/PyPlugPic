@@ -129,11 +129,11 @@ void UARTReceivedChar(char data) {
         else if (memcmp(cmd, "ATOFF", 5) == 0) {
             newCommand = OFF;
         }
+        else if (memcmp(cmd, "ATSTATE", 7) == 0) {
+            newCommand = PRINT_STATE;
+        }
         else if (memcmp(cmd, "ATPRINT", 7) ==0) {
             newCommand = PRINT_READING;
-        }
-        else if (memcmp(cmd, "ATCAL", 5) == 0) {
-            newCommand = CALIBRATE;
         }
         else if (memcmp(cmd, "ATRESET", 7) == 0) {
             newCommand = RESET;

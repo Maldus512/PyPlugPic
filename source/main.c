@@ -17,8 +17,6 @@
 #include <string.h>
 
 
-uint8_t f_calibration = 0;
-
 void initSystem(void)
 {
 //    ConfigureOscillator();
@@ -78,9 +76,6 @@ int main(void)
             case PRINT_READING:
                 stato.f_transmitSensorReadings = 1;
                 break;
-            case CALIBRATE:
-                f_calibration = 1;
-                break;
 
             case RESET:
                 minuteCounter = 0;
@@ -103,14 +98,19 @@ int main(void)
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
                 break;
                 
+            case PRINT_STATE:
+                sprintf(stringa, "%i\n\r", stato.f_relayOn);
+                UARTBlockingWrite((char*)stringa, strlen(stringa));
+                break;
+                
             case ZERO_POWER:
                 powerConsumption = 0;
                 break;
         }
                 
         if (f_readCurrentSensor) {
+            current = currentRead(&calibration);
             if (stato.f_relayOn) {
-                current = currentRead(&calibration);
                 currentSum += current;
                 currentSampleNum++;
 
