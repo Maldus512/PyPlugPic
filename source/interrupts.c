@@ -67,13 +67,13 @@ void interrupt isr(void)
         stato.f_transmitSensorReadings = 0;
         
         if (read == '\r') {
-            UARTputc('\n');
+            //UARTputc('\n');
             UARTReceivedChar('\n');
         }
         else {
             UARTReceivedChar(read);
         }
-        UARTputc(read);
+        //UARTputc(read);
         
         RC1STAbits.CREN = 1;
     }
