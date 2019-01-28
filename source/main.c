@@ -61,6 +61,7 @@ int main(void)
             case ON:
                 RELAY = 1;
                 stato.f_relayOn = 1;
+                UARTputc('\n');
                 /*minuteCounter = 0;
                 current = 0;
                 currentSum = 0;
@@ -72,9 +73,11 @@ int main(void)
                 RELAY = 0;
                 stato.f_relayOn = 0;
                 calibrationMeanCount = 0;
+                UARTputc('\n');
                 break;
             case PRINT_READING:
                 stato.f_transmitSensorReadings = 1;
+                UARTputc('\n');
                 break;
 
             case RESET:
@@ -86,25 +89,27 @@ int main(void)
                 f_1s = 0;
                 powerConsumption = 0;
                 amperePerMinute = 0;
+                UARTputc('\n');
                 break;
                 
             case READ_CURRENT:
-                sprintf(stringa, "%.3f\n\r", current);
+                sprintf(stringa, "%.3f\n", current);
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
                 break;
                 
             case READ_POWER:
-                sprintf(stringa, "%.3f\n\r", powerConsumption);
+                sprintf(stringa, "%.3f\n", powerConsumption);
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
                 break;
                 
             case PRINT_STATE:
-                sprintf(stringa, "%i\n\r", stato.f_relayOn);
+                sprintf(stringa, "%i\n", stato.f_relayOn);
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
                 break;
                 
             case ZERO_POWER:
                 powerConsumption = 0;
+                UARTputc('\n');
                 break;
         }
                 
@@ -124,11 +129,11 @@ int main(void)
             }
             
             if (stato.f_transmitSensorReadings == 1) {
-                sprintf(stringa, "pw: %i, current = %.3f, ", stato.f_relayOn, current);
+                sprintf(stringa, "state=%i, current=%.3f, ", stato.f_relayOn, current);
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
-                sprintf(stringa, "adc = %i - cal = %i, ", readADC(), calibration);
+                sprintf(stringa, "adc=%i, cal=%i, ", readADC(), calibration);
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
-                sprintf(stringa, "consumption = %.3f W/h\n\r", powerConsumption);
+                sprintf(stringa, "consumption=%.3f\n", powerConsumption);
                 UARTBlockingWrite((char*)stringa, strlen(stringa));
             }
             f_readCurrentSensor = 0;
@@ -139,18 +144,11 @@ int main(void)
             f_1s = 0;
         }
         
-        if (minuteCounter >= 60 && stato.f_transmitSensorReadings == 1) {
+        if (minuteCounter >= 60) {
             minuteCounter = 0;
-            
-            sprintf(stringa,"currentSum : %f, currentSampleNum: %i", currentSum, currentSampleNum);
-            UARTBlockingWrite((char*)stringa, strlen(stringa));
             
             amperePerMinute = currentSum/currentSampleNum;
             currentSum = currentSampleNum = 0;
-            
-            sprintf(stringa, ", amperePerMinute: %f\n\r", amperePerMinute);
-            UARTBlockingWrite((char*)stringa, strlen(stringa));
-            
             powerConsumption += amperePerMinute*powerConstant;
         }
         
