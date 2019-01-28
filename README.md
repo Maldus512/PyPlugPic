@@ -1,6 +1,6 @@
 # PyPlug Current Sensor Firmware
 
-This firmware is meant to be flashed on PyPlug's PIC16F15325. The role of the PIC MCU on the board is to continuously read and convert ADC values from the current sensor; this is done 5 times per second. Those values are then conveniently polled by a higher level ESP32, which can avoid to poll an ADC by itself. You can find PyPlug's ESP32 implementation [here](https://github.com/Maldus512/PyPlugESP32).
+This firmware is meant to be flashed on PyPlug's PIC16F15325. The role of the PIC MCU on the board is to continuously read and convert ADC values from the current sensor; this is done 5 times per second. Those values are then conveniently polled by a higher level ESP32, which can avoid to poll an ADC by itself. You can find PyPlug's ESP32 firmware implementation [here](https://github.com/Maldus512/PyPlugESP32).
 
 ## Communication Protocol
 
